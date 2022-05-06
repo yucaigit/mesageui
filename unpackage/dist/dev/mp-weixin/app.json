@@ -1,0 +1,70 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/sort/sort",
+    "pages/sell/sell",
+    "pages/cart/cart",
+    "pages/my/my"
+  ],
+  "subPackages": [
+    {
+      "root": "subpackage",
+      "pages": [
+        "search/search",
+        "goodsDetail/goodsDetail",
+        "goodsList/goodsList",
+        "order/order",
+        "wxpay/wxpay",
+        "payok/payok",
+        "myAdress/myAdress",
+        "test/test",
+        "qiugou/qiugou",
+        "cartpayok/cartpayok",
+        "mymessage/mymessage"
+      ]
+    }
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "社区闲置物品交易平台",
+    "navigationBarBackgroundColor": "#6495ED",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "selectedColor": "#C00000",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "static/tab_icons/index.png",
+        "selectedIconPath": "static/tab_icons/index_active.png"
+      },
+      {
+        "pagePath": "pages/sort/sort",
+        "text": "分类",
+        "iconPath": "static/tab_icons/sort.png",
+        "selectedIconPath": "static/tab_icons/sort_active.png"
+      },
+      {
+        "pagePath": "pages/sell/sell",
+        "text": "出售",
+        "iconPath": "static/tab_icons/sell.png",
+        "selectedIconPath": "static/tab_icons/sell_active.png"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "text": "购物车",
+        "iconPath": "static/tab_icons/cart.png",
+        "selectedIconPath": "static/tab_icons/cart_active.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "static/tab_icons/my.png",
+        "selectedIconPath": "static/tab_icons/my_active.png"
+      }
+    ]
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
+}
