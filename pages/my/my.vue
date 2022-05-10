@@ -23,16 +23,16 @@
          <view class="panel">
            <view class="panel-body">
              <view class="panel-item" @click="goToMyCart">
-               <text>8</text>
+               <text></text>
                <text>我的购物车</text>
              </view>
-             <view class="panel-item">
-               <text>14</text>
+             <view class="panel-item" @click="gotoIndex">
+               <text></text>
                <text>主页</text>
              </view>
-             <view class="panel-item">
-               <text>18</text>
-               <text>关注的商品</text>
+             <view class="panel-item" @click="gotoLiuyan">
+               <text class="message">{{msgNum}}</text>
+               <text>我的留言</text>
              </view>
              <view class="panel-item">
                <text>84</text>
@@ -58,7 +58,7 @@
              </view>
              <view class="panel-item" @click="gettoliuyan">
                <image  src="../../static/temp/wxlogin.png" class="icon"></image>
-               <text>留言状态</text>
+               <text>社区闲聊</text>
              </view>
              <view class="panel-item" @click="goToOrder(user.uid)">
                <image src="../../static/temp/dindan.png" class="icon"></image>
@@ -106,11 +106,11 @@
     data() {
       return{
         userinfo:[],
+		msgNum:0
       }
     },
     onLoad(e) {
-		console.log("------------")
-		console.log(e)
+		this.getMyMessage(this.user.uid)
     },
     
     methods:{
@@ -135,7 +135,7 @@
       },
 	  gettoliuyan(){
 		uni.navigateTo({
-			url:'../../subpackage/mymessage/mymessage?id='+this.user.uid
+			url:'../../subpackage/goeasyTest/goeasyTest'
 		})  
 	  },
       //订单
@@ -157,12 +157,27 @@
 	  },
 	  gotoTest(){
 		  uni.navigateTo({
-		  	url:'../../subpackage/test/test'
+		  	url:'../../subpackage/goeasyTest/goeasyTest'
 		  })
 	  },
 	  getoQiugou(){
 		  uni.navigateTo({
 		  	url:'../../subpackage/qiugou/qiugou'
+		  })
+	  },
+	  // 得到留言数量
+	  async getMyMessage(e){
+		let result = await this.$request('/getMsgNum?uid='+e)
+		this.msgNum = result
+	  },
+	  gotoLiuyan(){
+		  uni.navigateTo({
+		  	url:'../../subpackage/mymessage/mymessage'
+		  })
+	  },
+	  gotoIndex(){
+		  uni.navigateTo({
+		  	url:'../index/index'
 		  })
 	  }
     },
@@ -261,5 +276,9 @@
    font-size: 15px;
    padding: 0 10px;
    line-height: 45px;
+ }
+ // 留言
+ .message{
+	 color: #DD524D;
  }
 </style>

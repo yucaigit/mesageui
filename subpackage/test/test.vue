@@ -87,7 +87,7 @@
 		initWebsocket(){
 			const that = this
 			wx.connectSocket({
-			  url: 'ws://127.0.0.1:8080/websocketapi/'+'a'
+			  url: 'ws://127.0.0.1:8088/chat'
 			});
 			wx.onSocketOpen(function(res) {
 			  that.socketOpen = true

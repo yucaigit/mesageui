@@ -1,256 +1,211 @@
 <template>
- <view class="page">
-	 <view class="box">
-		 <!-- 标题区域 -->
-		 <view class="title">
-			 <text></text>
-		 </view>
-			<!-- 搜索区域 -->
-		<view v-show="current==0" class="sousuoquyu">
-		 <view class="sousuo">
-			 <input type="number" placeholder="请输入要搜索的用户ID" v-model="userid"/>
-		 </view>
-		 <image src="../../static/temp/sou.png" class="images" @click="searchUser"/>
-		 </view>
-		 
-		 <!-- 显示用户信息区域 -->
-		 <view v-show="current==1" class="xianshiyonhu">
+ <view class="page1">
+	 
+	 <view v-if="mesList.length===0">没有留言给你哦</view>
+	 
+	 <scroll-view scroll-y>
+	 <view class="box" v-for="(item,i) in mesList" :key="i">
+		 <view class="userinfo">
+			 <image :src="item.users.ua"></image>
 			 <view class="user">
-				 <image :src="user.ua" class="img"/></image>
-				 <view>{{user.uname}}</view>
+				 <view>{{item.buyname}}</view>
+				 <view class="selltime">{{item.selltime}}</view>
 			 </view>
 		 </view>
 		 
-		 <scroll-view scroll-y>
-			 
-		 <!-- 聊天内容区域  左边他人-->
-		 <view class="chatbox">
-		 <view class="chat" v-for="(item,i) in sendMsgList" :key="i">
-			 <view class="username">
-				 <image src="../../static/tab_icons/my.png" class="img"></image>
-			</view>
-			 <view class="chatneiron">{{item.content}}</view>
+		 <view class="message">
+			 {{item.message}}
 		 </view>
 		 
-		 
-		 <!-- 我的聊天记录 -->
-		 
-		 <view class="chatr" v-if="mymessage.length !=0" v-for="(item,i) in mymessage" :key="i">
-			 <view class="chatneironr">{{item.data}}</view>
-		 			 <view class="username">
-		 				 <image src="../../static/tab_icons/my.png" class="img"></image>
-		 			</view>	 
+		 <view class="liuyan">
+<!-- 			 <view class="boxi">
+			 		 <input placeholder="回复" />
+			 </view> -->
+			 <view class="huifu" @click="replyfunction(item.id)" v-if="item.replymessage===null">回复</view>
+			 <view class="huifu" v-if="item.replymessage!==null">已回复</view>
+			 <view class="hulue" @click="deleteMsg(item.id)">忽略</view>
 		 </view>
-		 
-		 </view>
-		 
-		 </scroll-view>
-		 <!-- 聊天输入框 -->
-		 <view class="fasonquyu">
-			 <input placeholder="聊天内容" v-model="msg" class="inputmsg"/>
-			 <button type="primary" @click="sendMsgTest">send</button>
-		 </view>
-		 
 	 </view>
-	 
+
+	 </scroll-view>
+	 <uni-popup ref="popup" type="bottom" background-color="#fff">
+	 	   <view class="">
+	 		   <view class="address-msg">
+	 		     <view class="item-msg">回复</view>
+	 		     <view class="section">
+	 		       <input type="text" placeholder="请回复留言" :value="reply" @input="msgfunction"  placeholder-class="phcolor"></input>
+	 		     </view>
+	 		   </view>
+	 	   </view>
+	 	   <view class="tijiaoliuyan" @click="submitReply">
+	 		   <button type="warn">提交</button>
+	 	   </view>
+	 </uni-popup>
 </view>
 </template>
 
 <script>
-	import { mapState, mapMutations } from 'vuex'
-
+import { mapState, mapMutations } from 'vuex'
 	export default {
 		computed:{
 		  ...mapState('m_user',['user'])
 		},
-	data() {
-		return {
-			userid:0,
-			username:'无',
-			current:0,
-			sendUser:[],
-			msg:'',
-			
-			mymessage:[],
-			sendMsgList:[],
-			socketOpen:false,
-			socketMsgQueue:[],
-			response:'',
-			
-		}
-	},
-	onShow() {
-		this.initWebsocket()
-	},	
-	methods: {
-		// webSocket
-		initWebsocket(){
-			const that = this
-			wx.connectSocket({
-			  url: 'ws://127.0.0.1:8080/websocketapi/'+'b'
-			});
-			wx.onSocketOpen(function(res) {
-			  that.socketOpen = true
-			  for (let i = 0; i < that.socketMsgQueue.length; i++){
-			    that.sendSocketMessage(socketMsgQueue[i])
-			  }
-			  that.socketMsgQueue= []
-			});
-		},
-		sendSocketMessage(msg){
-			let that = this
-			if (this.socketOpen){
-				wx.sendSocketMessage({
-					data:msg
-				})
-			}else{
-				this.socketMsgQueue.push(msg)
+		data() {
+			return {
+				reply:'',
+				mesList:[],
+				id:0
 			}
-			wx.onSocketMessage(function(res){
-				console.log(JSON.parse(res.data))
-				let sendMsg = JSON.parse(res.data)
-				that.sendMsgList.push(sendMsg)
-			})
 		},
+		onShow() {
+			this.getMyAllMesg(this.user.uid)
+		},
+
+		methods: {
+			async getMyAllMesg(e){
 		
-		// 发送消息到服务端
-		sendMsg(){
-		  const	message = {
-				fromName:'b',
-				toName:'a',
-				content:this.msg,
-			};
-			//发送消息到服务端
-			this.sendSocketMessage(JSON.stringify(message))
-		},
-		
-		// 得到用户信息
-	     async searchUser(){
-			let result  = await this.$request('/chatcontroller/getuser?userid='+this.userid)
-			if(result==null || result==''){
-				uni.showToast({
-					title:'查无此用户'
-				})
-			}else{
-				console.log(this.user)
-				this.sendUser = result
-				this.current=1
+				let result = await this.$request('/getMyAllMes',{uid:e})
+				console.log(result)
+				this.mesList = result
+				
+			},
+			replyfunction(e){
+				this.id = e
+				this.open()
+			},
+			open(){
+				// 通过组件定义的ref调用uni-popup方法 ,如果传入参数 ，type 属性将失效 ，仅支持 ['top','left','bottom','right','center']
+				this.$refs.popup.open('popup')
+				},
+			msgfunction(e){
+					  setTimeout(()=>{
+						 this.reply = e.detail.value 
+					  },1000)
+					  
+			},
+			async submitReply(){
+				if(this.reply===null || this.reply===''){
+					uni.showToast({
+						title:'内容不可为空'
+					})
+					return
+				}
+				let result = await this.$request('/updateReplayMs',{id:this.id,reply:this.reply})
+				if(result){
+					uni.showToast({
+						title:'成功'
+					})
+					this.getMyAllMesg(this.user.uid)
+				}
+			},
+			async deleteMsg(e){
+				let result = await this.$request('/deletemsg?id='+e)
+					if(result){
+						uni.showToast({
+							title:'删除成功'
+						})
+						this.getMyAllMesg(this.user.uid)
+					}
 			}
-			console.log(result)
-		},
-		sendMsgTest(){
-			if(this.sendUser==null || this.sendUser==''){
-				uni.showToast({
-					title:'没有用户发送'
-				})
-				return
-			}
-			let query = {
-				index:0,
-				data:this.msg
-			}
-			this.mymessage.push(query)
-			this.sendMsg()
-			this.msg=null
-			console.log(this.mymessage)
-		},
-    },
-	onLoad() {
-	
+
+      }
+
 	}
-}
 </script>
 
 <style lang="scss">
-.page{
-	width: 100%;
-	height: 1000rpx;
-}
-.sousuoquyu{
-	background-color: #FFF;
-	display: flex;
-}
-.images{
-	
-	height: 80rpx;
-	width: 80rpx;
-}
-.sousuo{
-	
-	height: 80rpx;
-	width: 90%;
-	border-radius: 10rpx;
-    border: 2rpx solid #333333;
-}
-.chatbox{
-	
-}
-.box{
-	height: 100%;
-	width: 98%;
-	
-	margin: 10rpx;
-	//background-color: #007AFF;
-}
-.fasonquyu{
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-}
-.chat{
-	display: flex;
-	width: 100%;
-	margin-top: 10rpx;
-}
-.username{
-}
-// .chatneiron{
-// 	margin-left: 10rpx;
-// 	width: auto;
-// 	height: 30rpx;
-// 	background-color: #FFFFFF;
-// 	border: 3rpx solid #FFF;
-// }
-// 聊天旗袍
-.chatneiron {
-  /* display: none; */
-  width: 250rpx;
-  font-size: 25rpx;
-  height: 50rpx;
-  background-color: #666666;
-  border: 1px solid #666666;
-  border-radius: 5px;
-}
-.chatneironr {
-  /* display: none; */
-  width: 250rpx;
-  font-size: 25rpx;
-  height: 50rpx;
-  background-color: #00CC66;
-  border: 1px solid #00CC66;
-  border-radius: 5px;
-}
-.img{
-	width: 50rpx;
-	height: 50rpx;
-	margin-right: 10rpx;
-}
-.chatr{
-	display: flex;
-	margin-left: 60%;
-	margin-top: 10rpx;
-}
-.xianshiyonhu{
-	height: 100rpx;
-	width: auto;
-}
-.user{
-	display: flex;
-}
-.inputmsg{
-	width: 100%;
-	height: 60rpx;
-	border: 2rpx solid #3C3E49;
-}
+	.page1{
+		background-color: #EAEAEA;
+	}
+	.box{
+		width: 90%;
+		height: 300rpx;
+		margin-top: 20rpx;
+		margin-left: 5%;
+		background-color: #FFFFFF;
+		
+	}
+	.boxi{
+		height: 60rpx;
+		background-color: #FFF;
+		margin-top: 10rpx;
+		border: 1px solid #D1D1D1;
+		width: 60%;
+	}
+	.userinfo{
+		display: flex;
+	}
+	.userinfo image{
+		height: 80rpx;
+		width: 80rpx;
+		margin: 10rpx;
+		border-radius: 10rpx;
+	}
+	.message{
+		height: 100rpx;
+		width: 60%;
+		margin-left: 100rpx;
+		background-color: #EAEAEA;
+		text-align: center;
+	}
+	.liuyan{
+		display: flex;
+		margin-left: 10rpx;
+		
+	}
+	.huifu{
+		width: 100rpx;
+		font-size: 30rpx;
+		color: #4CD964;
+		margin-top: 20rpx;
+		margin-left: 10rpx;
+	}
+	.hulue{
+		width: 100rpx;
+		font-size: 30rpx;
+		color: #DD524D;
+		margin-top: 20rpx;
+		margin-left: 10rpx;
+	}
+	.selltime{
+		font-size: 20rpx;
+		font-weight: 10;
+	}
+	.address-msg {
+	  height: 128rpx;
+	  display: flex;
+	  align-items: center;
+	  background: #FFFFFF;
+	  border-top: 2rpx solid #efefef;
+	  font-size: 28.68rpx;
+	  color: #333333;
+	  padding: 0 20rpx;
+	}
+	/* 评价 */
+	.eva-section{
+		display: flex;
+		flex-direction: column;
+		padding: 20rpx 30rpx;
+		background: #fff;
+		margin-top: 16rpx;
+		.e-header{
+			display: flex;
+			align-items: center;
+			height: 70rpx;
+			font-size: 30rpx;
+			color: #DD524D;
+			.tit{
+				font-size: 40rpx;
+				color: #333333;
+				margin-right: 4rpx;
+			}
+			.tip{
+				flex: 1;
+				text-align: right;
+			}
+			.icon-you{
+				margin-left: 10rpx;
+			}
+		}
+	}
 </style>

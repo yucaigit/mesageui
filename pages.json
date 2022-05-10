@@ -106,6 +106,16 @@
                 }
                 ,{
                     "path" : "mymessage/mymessage",
+                    "style":                                                                        
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+				
+                }
+                
+                }
+                ,{
+                    "path" : "goeasyTest/goeasyTest",
                     "style" :                                                                                    
                 {
                     "navigationBarTitleText": "",

@@ -24,78 +24,96 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.page {
-  width: 100%;
-  height: 1000rpx;
-}
-.sousuoquyu {
-  background-color: #FFF;
-  display: flex;
-}
-.images {
-  height: 80rpx;
-  width: 80rpx;
-}
-.sousuo {
-  height: 80rpx;
-  width: 90%;
-  border-radius: 10rpx;
-  border: 2rpx solid #333333;
+.page1 {
+  background-color: #EAEAEA;
 }
 .box {
-  height: 100%;
-  width: 98%;
-  margin: 10rpx;
+  width: 90%;
+  height: 300rpx;
+  margin-top: 20rpx;
+  margin-left: 5%;
+  background-color: #FFFFFF;
 }
-.fasonquyu {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-}
-.chat {
-  display: flex;
-  width: 100%;
-  margin-top: 10rpx;
-}
-.chatneiron {
-  /* display: none; */
-  width: 250rpx;
-  font-size: 25rpx;
-  height: 50rpx;
-  background-color: #666666;
-  border: 1px solid #666666;
-  border-radius: 5px;
-}
-.chatneironr {
-  /* display: none; */
-  width: 250rpx;
-  font-size: 25rpx;
-  height: 50rpx;
-  background-color: #00CC66;
-  border: 1px solid #00CC66;
-  border-radius: 5px;
-}
-.img {
-  width: 50rpx;
-  height: 50rpx;
-  margin-right: 10rpx;
-}
-.chatr {
-  display: flex;
-  margin-left: 60%;
-  margin-top: 10rpx;
-}
-.xianshiyonhu {
-  height: 100rpx;
-  width: auto;
-}
-.user {
-  display: flex;
-}
-.inputmsg {
-  width: 100%;
+.boxi {
   height: 60rpx;
-  border: 2rpx solid #3C3E49;
+  background-color: #FFF;
+  margin-top: 10rpx;
+  border: 1px solid #D1D1D1;
+  width: 60%;
+}
+.userinfo {
+  display: flex;
+}
+.userinfo image {
+  height: 80rpx;
+  width: 80rpx;
+  margin: 10rpx;
+  border-radius: 10rpx;
+}
+.message {
+  height: 100rpx;
+  width: 60%;
+  margin-left: 100rpx;
+  background-color: #EAEAEA;
+  text-align: center;
+}
+.liuyan {
+  display: flex;
+  margin-left: 10rpx;
+}
+.huifu {
+  width: 100rpx;
+  font-size: 30rpx;
+  color: #4CD964;
+  margin-top: 20rpx;
+  margin-left: 10rpx;
+}
+.hulue {
+  width: 100rpx;
+  font-size: 30rpx;
+  color: #DD524D;
+  margin-top: 20rpx;
+  margin-left: 10rpx;
+}
+.selltime {
+  font-size: 20rpx;
+  font-weight: 10;
+}
+.address-msg {
+  height: 128rpx;
+  display: flex;
+  align-items: center;
+  background: #FFFFFF;
+  border-top: 2rpx solid #efefef;
+  font-size: 28.68rpx;
+  color: #333333;
+  padding: 0 20rpx;
+}
+/* 评价 */
+.eva-section {
+  display: flex;
+  flex-direction: column;
+  padding: 20rpx 30rpx;
+  background: #fff;
+  margin-top: 16rpx;
+}
+.eva-section .e-header {
+  display: flex;
+  align-items: center;
+  height: 70rpx;
+  font-size: 30rpx;
+  color: #DD524D;
+}
+.eva-section .e-header .tit {
+  font-size: 40rpx;
+  color: #333333;
+  margin-right: 4rpx;
+}
+.eva-section .e-header .tip {
+  flex: 1;
+  text-align: right;
+}
+.eva-section .e-header .icon-you {
+  margin-left: 10rpx;
 }
 

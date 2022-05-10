@@ -1,0 +1,79 @@
+
+.content {
+	padding: 20rpx 20rpx 20rpx 20rpx;
+	font-family: Source Han Sans CN;
+	width:100%;
+	height: 100%;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+.header {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: #D02129;
+	margin-top: 10px;
+}
+.header .title {
+	height: 25px;
+	line-height: 25px;
+	font-size: 24px;
+}
+.header .description {
+	height: 25px;
+	line-height: 25px;
+	font-size: 28px;
+	font-weight: bold;
+	margin-top: 10px;
+}
+.send-box {
+	display: flex;
+	flex-direction: row;
+	height: 40rpx;
+	margin-top: 32rpx;
+	margin-bottom: 32rpx;
+/* //	position:fixed;  // 使按钮固定于可视窗口的底部 */
+margin-top: 60%;
+}
+.send-box input {
+	flex-grow: 1;
+	background: #EFEFEF;
+	border: 1rpx solid #C8C7CC;
+	border-radius: 6rpx;
+	padding: 8rpx;
+}
+.send-box text {
+	color: #D02129;
+	margin-left: 9px;
+	font-size: 15px;
+	height: 40px;
+	line-height: 40px;
+	width: 40px;
+	text-align: right;
+}
+.message-content {
+	height: 500rpx;
+	background: #FFFFFF;
+
+	margin-top: 26px;
+}
+.message-text {
+	padding: 4px 11px;
+	display: flex;
+}
+.img{
+	width: 80rpx;
+	height: 80rpx;
+	margin-right: 20rpx;
+}
+.wxname{
+	font-size: 20rpx;
+	font-weight: 10;
+}
+.wxdata{
+	margin-left: 20rpx;
+}
+
+

@@ -20,7 +20,8 @@
         "test/test",
         "qiugou/qiugou",
         "cartpayok/cartpayok",
-        "mymessage/mymessage"
+        "mymessage/mymessage",
+        "goeasyTest/goeasyTest"
       ]
     }
   ],

@@ -46,7 +46,7 @@
 		  <text>我的周边</text>
 	  </view>
 	  <view class="navItem" @click="lookDetail(2)">
-		   <text>最新商品</text>
+		   <text>求购商品</text>
 	  </view>
 	</view>
     <!-- 商品列表-->
