@@ -24,7 +24,8 @@
         "goeasyTest/goeasyTest",
         "history/history",
         "qiugouList/qiugouList",
-        "mygoods/mygoods"
+        "mygoods/mygoods",
+        "updateMyGoods/updateMyGoods"
       ]
     }
   ],

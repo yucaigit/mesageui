@@ -254,6 +254,27 @@
           "name": "",
           "pathName": "subpackage/qiugouList/qiugouList",
           "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackage/mygoods/mygoods",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackage/mygoods/mygoods",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/index/index",
+          "query": "",
           "scene": null,
           "launchMode": "default"
         }

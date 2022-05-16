@@ -41,8 +41,4 @@
   text-overflow: ellipsis;
   margin-right: 3px;
 }
-.subgoods {
-  margin-left: 58%;
-  color: #DD524D;
-}
 

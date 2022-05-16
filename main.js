@@ -5,6 +5,8 @@ import store from 'store/store.js'
 Vue.prototype.$request = request
 
 import GoEasy from './lib/goeasy-2.4.6.min.js';
+import uView from "uview-ui";
+Vue.use(uView);
 
 const goEasy = GoEasy.getInstance({
 	host:"hangzhou.goeasy.io",//应用所在的区域地址: 【hangzhou.goeasy.io |singapore.goeasy.io】

@@ -179,7 +179,7 @@
 		  })
 	  },
 	  gotoIndex(){
-		  uni.navigateTo({
+		  uni.switchTab({
 		  	url:'../index/index'
 		  })
 	  },
@@ -195,7 +195,7 @@
 	  },
 	  myGoods(){
 		  uni.navigateTo({
-		  	url:'../../subpackage/mygoods/mygoods'
+		  	url:'../../subpackage/mygoods/mygoods?query='+this.user.uid
 		  })
 	  }
     },

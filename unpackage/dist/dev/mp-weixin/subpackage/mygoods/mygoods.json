@@ -1,5 +1,10 @@
 {
   "navigationBarTitleText": "",
   "enablePullDownRefresh": false,
-  "usingComponents": {}
+  "usingComponents": {
+    "u-subsection": "/node-modules/uview-ui/components/u-subsection/u-subsection",
+    "u-divider": "/node-modules/uview-ui/components/u-divider/u-divider",
+    "u-swipe-action": "/node-modules/uview-ui/components/u-swipe-action/u-swipe-action",
+    "u-swipe-action-item": "/node-modules/uview-ui/components/u-swipe-action-item/u-swipe-action-item"
+  }
 }
