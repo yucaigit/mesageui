@@ -119,10 +119,10 @@
     
     onLoad(options) {
       this.request_id = options.query
-	  console.log('userid:'+this.user.uid)
       this.getGoodsDetail()
 	  this.getAllMessage()
-      
+	
+	  this.addHistory(this.user.uid,this.request_id)
     },
     methods:{
       ...mapMutations('m_cart',['addToCart']),
@@ -232,7 +232,9 @@
         // console.log(this.request_id)
       },
       
-      // 动态赋值给购物车
+      async addHistory(a,b){
+		let result = await this.$request('/addHistory',{uid:a,goodsid:b})  
+	  }
       
     }
 	}

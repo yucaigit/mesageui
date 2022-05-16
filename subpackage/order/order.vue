@@ -33,8 +33,8 @@
 					</view>
 				</view>
 				<view class="card-button">
-          <view>查看物流</view>
-				</view>
+          <view>查看详情</view>
+			</view>
 			</view>
 		</view>
 		
@@ -97,7 +97,7 @@
 				</view>
 				<view class="card-button">
           <view @click="removeOrder(item)">删除</view>
-          <view>查看物流</view>
+          <view>确认收货</view>
           <view>再次购买</view>
 				</view>
 			</view>

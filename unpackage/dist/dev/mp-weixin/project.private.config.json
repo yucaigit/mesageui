@@ -226,6 +226,34 @@
           "name": "",
           "pathName": "subpackage/mymessage/mymessage",
           "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackage/history/history",
+          "query": "query=7001",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackage/qiugouList/qiugouList",
+          "query": "",
           "scene": null,
           "launchMode": "default"
         }

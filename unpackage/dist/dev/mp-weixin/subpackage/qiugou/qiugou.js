@@ -173,6 +173,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -180,12 +186,14 @@ var _default =
       qiugou: {
         name: '',
         phone: '',
-        needGoods: '' },
+        needGoods: '',
+        price: 0 },
 
       qiugou2: {
         name: '',
         phone: '',
-        needGoods: '' } };
+        needGoods: '',
+        price: 0 } };
 
 
   },
@@ -193,35 +201,46 @@ var _default =
 
   },
   methods: {
-    consigneeNameInput: function consigneeNameInput(e) {var _this = this;
+    priceInput: function priceInput(e) {var _this = this;
       this.setData = setTimeout(function () {
-        _this.qiugou.name = e.detail.value;
+        _this.qiugou.price = e.detail.value;
       });
     },
-    phoneInput: function phoneInput(e) {var _this2 = this;
+    consigneeNameInput: function consigneeNameInput(e) {var _this2 = this;
+      this.setData = setTimeout(function () {
+        _this2.qiugou.name = e.detail.value;
+      });
+    },
+    phoneInput: function phoneInput(e) {var _this3 = this;
       setTimeout(function () {
-        _this2.qiugou.phone = e.detail.value;
+        _this3.qiugou.phone = e.detail.value;
       });
     },
-    getDetailAdress: function getDetailAdress(e) {var _this3 = this;
+    getDetailAdress: function getDetailAdress(e) {var _this4 = this;
       setTimeout(function () {
-        _this3.qiugou.needGoods = e.detail.value;
+        _this4.qiugou.needGoods = e.detail.value;
       });
     },
-    submitAdress: function submitAdress() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var result;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:if (!(
-                _this4.qiugou == _this4.qiugou2)) {_context.next = 3;break;}
+    submitAdress: function submitAdress() {var _this5 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var result;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:if (!(
+                _this5.qiugou == _this5.qiugou2)) {_context.next = 3;break;}
                 uni.showToast({
-                  title: '不可重复发布！' });return _context.abrupt("return");case 3:
+                  title: '不可重复发布！' });return _context.abrupt("return");case 3:if (
 
 
 
-                _this4.qiugou2 = _this4.qiugou;_context.next = 6;return (
-                  _this4.$request('/qiugou', _this4.qiugou));case 6:result = _context.sent;
+                /(^[0-9]*$)/.test(_this5.qiugou.price)) {_context.next = 6;break;}
+                uni.showToast({
+                  title: '检查价格格式' });return _context.abrupt("return");case 6:
+
+
+
+                _this5.qiugou2 = _this5.qiugou;_context.next = 9;return (
+                  _this5.$request('/qiugou', _this5.qiugou));case 9:result = _context.sent;
                 if (result) {
                   uni.showToast({
                     title: '需求发布成功！' });
 
-                }case 8:case "end":return _context.stop();}}}, _callee);}))();
+                }case 11:case "end":return _context.stop();}}}, _callee);}))();
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

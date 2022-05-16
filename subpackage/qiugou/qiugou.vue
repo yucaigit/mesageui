@@ -24,6 +24,12 @@
 	          <input type="text" placeholder="输入需要的商品" :value="qiugou.needGoods"  placeholder-class="phcolor" @input="getDetailAdress"></input>
 	        </view>
 	      </view>
+		  <view class="address-msg">
+		    <view class="item-msg">商品价格</view>
+		    <view class="section">
+		      <input type="number" placeholder="商品价格" :value="qiugou.price" @input="priceInput" maxlength="11" placeholder-class="phcolor"></input>
+		    </view>
+		  </view>
 	      <view class="label">
 	        <view class="label-title">特别说明</view>
 	        <view class="section">
@@ -49,11 +55,13 @@
 					name:'',
 					phone:'',
 					needGoods:'',
+					price:0
 				},
 				qiugou2:{
 					name:'',
 					phone:'',
 					needGoods:'',
+					price:0
 				}
 			};
 		},
@@ -61,6 +69,11 @@
 			
 		},
 		methods:{
+			priceInput(e){
+				this.setData = setTimeout(()=>{
+					this.qiugou.price = e.detail.value
+				})
+			},
 			consigneeNameInput(e){
 				this.setData = setTimeout(()=>{
 					this.qiugou.name = e.detail.value
@@ -80,6 +93,12 @@
 				if(this.qiugou == this.qiugou2){
 					uni.showToast({
 						title:'不可重复发布！',
+					})
+					return
+				}
+				if(!(/(^[0-9]*$)/.test(this.qiugou.price))){
+					uni.showToast({
+						title:'检查价格格式'
 					})
 					return
 				}

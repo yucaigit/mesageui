@@ -16,30 +16,7 @@
         </swiper-item>
       </swiper>
     </view>
-    <!-- 我的小区 -->
-    <!--      五个图标导航-->
-    <!-- <view class="navContainer">
-      <view class="navItem" @click="lookDetail(1)">
-        <text class="iconfont icon-xinpin"></text>
-        <text>我的小区</text>
-      </view>
-      <view class="navItem" @click="lookDetail(2)">
-        <text class="iconfont icon-biaoqiankuozhan_fujin-393"></text>
-        <text>附近闲置</text>
-      </view>
-      <view class="navItem" @click="lookDetail(3)">
-        <text class="iconfont icon-tongcheng"></text>
-        <text>同城闲置</text>
-      </view>
-      <view class="navItem" @click="lookDetail(4)">
-        <text class="iconfont icon-mianfei"></text>
-        <text>免费专区</text>
-      </view>
-      <view class="navItem" @click="lookDetail(5)">
-        <text class="iconfont icon-xinpin"></text>
-        <text>新品出售</text>
-      </view>
-    </view> -->
+
 	
 	<view class="navContainer">
 	  <view class="navItem" @click="lookDetail(1)">
@@ -115,9 +92,17 @@
         })
       },
       lookDetail(e) {
-        uni.navigateTo({
-        	url:'../../subpackage/goodsList/goodsList?i='+e
-        })
+		if(e===1){
+			uni.navigateTo({
+				url:'../../subpackage/goodsList/goodsList?i='+e
+			})
+		}
+		if(e===2){
+			uni.navigateTo({
+				url:'../../subpackage/qiugouList/qiugouList'
+			})
+		}
+
       },
       getToDetail(e){
         const g_id = e.gid

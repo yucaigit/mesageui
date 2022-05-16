@@ -96,10 +96,10 @@ var components
 try {
   components = {
     uniGoodsNav: function() {
-      return __webpack_require__.e(/*! import() | components/uni-goods-nav/uni-goods-nav */ "components/uni-goods-nav/uni-goods-nav").then(__webpack_require__.bind(null, /*! @/components/uni-goods-nav/uni-goods-nav.vue */ 224))
+      return __webpack_require__.e(/*! import() | components/uni-goods-nav/uni-goods-nav */ "components/uni-goods-nav/uni-goods-nav").then(__webpack_require__.bind(null, /*! @/components/uni-goods-nav/uni-goods-nav.vue */ 232))
     },
     uniPopup: function() {
-      return __webpack_require__.e(/*! import() | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/components/uni-popup/uni-popup.vue */ 231))
+      return __webpack_require__.e(/*! import() | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/components/uni-popup/uni-popup.vue */ 239))
     }
   }
 } catch (e) {
@@ -277,10 +277,10 @@ var _vuex = __webpack_require__(/*! vuex */ 14);function _interopRequireDefault(
 
   onLoad: function onLoad(options) {
     this.request_id = options.query;
-    console.log('userid:' + this.user.uid);
     this.getGoodsDetail();
     this.getAllMessage();
 
+    this.addHistory(this.user.uid, this.request_id);
   },
   methods: _objectSpread(_objectSpread({},
   (0, _vuex.mapMutations)('m_cart', ['addToCart'])), {}, {
@@ -388,10 +388,11 @@ var _vuex = __webpack_require__(/*! vuex */ 14);function _interopRequireDefault(
     // 查看评论方法
     getCommit: function getCommit() {
       // console.log(this.request_id)
-    }
+    },
 
-    // 动态赋值给购物车
-  }) };exports.default = _default;
+    addHistory: function addHistory(a, b) {var _this6 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var result;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.next = 2;return (
+                  _this6.$request('/addHistory', { uid: a, goodsid: b }));case 2:result = _context4.sent;case 3:case "end":return _context4.stop();}}}, _callee4);}))();
+    } }) };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

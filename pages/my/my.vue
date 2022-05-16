@@ -34,8 +34,8 @@
                <text class="message">{{msgNum}}</text>
                <text>我的留言</text>
              </view>
-             <view class="panel-item">
-               <text>84</text>
+             <view class="panel-item" @click="gotoHistory">
+               <text>{{hisyNum}}</text>
                <text>足迹</text>
              </view>
            </view>
@@ -48,7 +48,7 @@
            </view>
            <view class="panel-body">
              
-             <view class="panel-item">
+             <view class="panel-item" @click="myGoods">
                <image src="../../static/temp/wodefabu.png" class="icon"></image>
                <text>我的发布</text>
              </view>
@@ -106,11 +106,14 @@
     data() {
       return{
         userinfo:[],
-		msgNum:0
+		msgNum:0,
+		hisy:[],
+		hisyNum:0
       }
     },
     onLoad(e) {
 		this.getMyMessage(this.user.uid)
+		this.getHistory(this.user.uid)
     },
     
     methods:{
@@ -178,6 +181,21 @@
 	  gotoIndex(){
 		  uni.navigateTo({
 		  	url:'../index/index'
+		  })
+	  },
+	  async getHistory(e){
+		let result = await this.$request('/gethisyMap',{uid:e})
+		this.hisy = result
+		this.hisyNum = result.length
+	  },
+	  gotoHistory(){
+		  uni.navigateTo({
+		  	url:'../../subpackage/history/history?query='+this.user.uid
+		  })
+	  },
+	  myGoods(){
+		  uni.navigateTo({
+		  	url:'../../subpackage/mygoods/mygoods'
 		  })
 	  }
     },

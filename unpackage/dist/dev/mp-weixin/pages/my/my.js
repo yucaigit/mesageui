@@ -96,7 +96,7 @@ var components
 try {
   components = {
     uniIcons: function() {
-      return Promise.all(/*! import() | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/components/uni-icons/uni-icons.vue */ 180))
+      return Promise.all(/*! import() | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/components/uni-icons/uni-icons.vue */ 188))
     }
   }
 } catch (e) {
@@ -261,11 +261,14 @@ var _vuex = __webpack_require__(/*! vuex */ 14);function _interopRequireDefault(
   data: function data() {
     return {
       userinfo: [],
-      msgNum: 0 };
+      msgNum: 0,
+      hisy: [],
+      hisyNum: 0 };
 
   },
   onLoad: function onLoad(e) {
     this.getMyMessage(this.user.uid);
+    this.getHistory(this.user.uid);
   },
 
   methods: _objectSpread(_objectSpread({},
@@ -333,6 +336,21 @@ var _vuex = __webpack_require__(/*! vuex */ 14);function _interopRequireDefault(
     gotoIndex: function gotoIndex() {
       uni.navigateTo({
         url: '../index/index' });
+
+    },
+    getHistory: function getHistory(e) {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var result;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:_context3.next = 2;return (
+                  _this4.$request('/gethisyMap', { uid: e }));case 2:result = _context3.sent;
+                _this4.hisy = result;
+                _this4.hisyNum = result.length;case 5:case "end":return _context3.stop();}}}, _callee3);}))();
+    },
+    gotoHistory: function gotoHistory() {
+      uni.navigateTo({
+        url: '../../subpackage/history/history?query=' + this.user.uid });
+
+    },
+    myGoods: function myGoods() {
+      uni.navigateTo({
+        url: '../../subpackage/mygoods/mygoods' });
 
     } }) };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

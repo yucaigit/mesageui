@@ -21,7 +21,10 @@
         "qiugou/qiugou",
         "cartpayok/cartpayok",
         "mymessage/mymessage",
-        "goeasyTest/goeasyTest"
+        "goeasyTest/goeasyTest",
+        "history/history",
+        "qiugouList/qiugouList",
+        "mygoods/mygoods"
       ]
     }
   ],
@@ -66,6 +69,5 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap.json"
+  "usingComponents": {}
 }
