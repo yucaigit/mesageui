@@ -95,14 +95,17 @@ __webpack_require__.r(__webpack_exports__);
 var components
 try {
   components = {
+    uNotify: function() {
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-notify/u-notify */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-notify/u-notify")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-notify/u-notify.vue */ 630))
+    },
     uActionSheet: function() {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-action-sheet/u-action-sheet */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-action-sheet/u-action-sheet")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-action-sheet/u-action-sheet.vue */ 573))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-action-sheet/u-action-sheet */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-action-sheet/u-action-sheet")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-action-sheet/u-action-sheet.vue */ 403))
     },
     uNavbar: function() {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-navbar/u-navbar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-navbar/u-navbar")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-navbar/u-navbar.vue */ 485))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-navbar/u-navbar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-navbar/u-navbar")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-navbar/u-navbar.vue */ 413))
     },
     uniIcons: function() {
-      return Promise.all(/*! import() | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/components/uni-icons/uni-icons.vue */ 323))
+      return Promise.all(/*! import() | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/components/uni-icons/uni-icons.vue */ 331))
     }
   }
 } catch (e) {
@@ -159,35 +162,43 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 41));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _vuex = __webpack_require__(/*! vuex */ 14);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 {
+  computed: _objectSpread({},
+  (0, _vuex.mapState)('m_user', ['user'])),
+
   data: function data() {
     return {
       title: '操作',
+      tipShow: true,
       list: [
       {
         name: '供应' },
@@ -196,19 +207,68 @@ var _default =
         name: '取消' }],
 
 
-      show: false };
+      show: false,
+      goodsList: [],
+      goodsName: '' };
 
   },
-  onLoad: function onLoad() {},
+  onLoad: function onLoad() {
+    this.getqiugouGoods();
+  },
   methods: {
-    showT: function showT() {
+    showT: function showT(item) {
       this.show = true;
+      this.goodsName = item.needGoods;
+    },
+    // 判断用户是否有此商品
+    isHaveGoods: function isHaveGoods(e) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var result;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
+                  _this.$request('/searchGoods', { uid: e, needName: _this.goodsName }));case 2:result = _context.sent;
+                if (result) {
+                  _this.$refs.uNotify.show({
+                    top: 10,
+                    type: 'error',
+                    color: '#000',
+                    bgColor: '#00ccff',
+                    message: '供应成功',
+                    duration: 1000 * 3,
+                    fontSize: 20,
+                    safeAreaInsetTop: true });
+
+
+                } else {
+                  _this.$refs.uNotify.show({
+                    top: 10,
+                    type: 'error',
+                    color: '#000',
+                    bgColor: '#00ccff',
+                    message: '您的仓库无此货物',
+                    duration: 1000 * 3,
+                    fontSize: 20,
+                    safeAreaInsetTop: true });
+
+                }case 4:case "end":return _context.stop();}}}, _callee);}))();
+
     },
     selectClick: function selectClick(index) {
       if (index.name === '取消') {
         this.show = false;
       }
+      if (index.name === '供应') {
+        if (this.user === null) {
+          uni.showToast({
+            title: '用户未登录' });
+
+        } else {
+          this.isHaveGoods(this.user.uid);
+        }
+      }
+    },
+    getqiugouGoods: function getqiugouGoods() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var result;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.next = 2;return (
+                  _this2.$request('/getQiugouGoods'));case 2:result = _context2.sent;
+                console.log(result);
+                _this2.goodsList = result;case 5:case "end":return _context2.stop();}}}, _callee2);}))();
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

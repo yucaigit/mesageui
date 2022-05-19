@@ -1,5 +1,9 @@
 <template>
 	<view>
+		<view>
+			<u-notify ref="uNotify" message="Hi uView"></u-notify>
+		</view>
+		
 		<u-action-sheet :actions="list" @select="selectClick" :title="title" :show="show" ></u-action-sheet>
 		
 		
@@ -10,12 +14,11 @@
 					placeholder
 				></u-navbar>
 		
-		<view class="sugg-list">
-		  <view class="sugg-item"  @click="showT">
-		    <view class="goods-name">item.goods_name}}</view>
+		<view class="sugg-list" v-for="(item,i) in goodsList" :key="i">
+		  <view class="sugg-item"  @click="showT(item)">
+		    <view class="goods-name">{{item.name}},{{item.needGoods}},价格{{item.price}}元</view>
 		    <uni-icons type="arrowright" size="16"></uni-icons>
 		  </view>
-		  
 		  
 		</view>
 		
@@ -23,10 +26,15 @@
 </template>
 
 <script>
+	import { mapState, mapMutations } from 'vuex'
 export default {
+	computed:{
+	  ...mapState('m_user',['user'])
+	},
 	data() {
 		return {
 			title:'操作',
+			tipShow:true,
 			list: [
 				{
 					name:'供应'
@@ -35,18 +43,66 @@ export default {
 					name:'取消'
 				}
 			],
-			show: false
+			show: false,
+			goodsList:[],
+			goodsName:''
 		};
 	},
-	onLoad() {},
+	onLoad() {
+		this.getqiugouGoods()
+	},
 	methods: {
-		showT(){
+		showT(item){
 			this.show =true
+			this.goodsName = item.needGoods
+		},
+		// 判断用户是否有此商品
+		async isHaveGoods(e){
+			let result = await this.$request('/searchGoods',{uid:e,needName:this.goodsName})
+			if(result){
+			this.$refs.uNotify.show({
+				top: 10,
+				type: 'error',
+				color: '#000',
+				bgColor: '#00ccff',
+				message: '供应成功',
+				duration: 1000 * 3,
+				fontSize: 20,
+				safeAreaInsetTop:true
+			})
+			
+		}else{
+			this.$refs.uNotify.show({
+				top: 10,
+				type: 'error',
+				color: '#000',
+				bgColor: '#00ccff',
+				message: '您的仓库无此货物',
+				duration: 1000 * 3,
+				fontSize: 20,
+				safeAreaInsetTop:true
+			})
+		}
+		
 		},
 		selectClick(index){
 			if(index.name==='取消'){
 				this.show = false
 			}
+			if(index.name==='供应'){
+				if(this.user===null){
+					uni.showToast({
+						title:'用户未登录'
+					})
+				}else{
+					this.isHaveGoods(this.user.uid)
+				}
+			}
+		},
+		async getqiugouGoods(){
+			let result = await this.$request('/getQiugouGoods')
+			console.log(result)
+			this.goodsList = result
 		}
 	}
 };

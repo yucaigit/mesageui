@@ -33,7 +33,7 @@
 					</view>
 				</view>
 				<view class="card-button">
-          <view>查看详情</view>
+          <view @click="lookDetail(item)">再次购买</view>
 			</view>
 			</view>
 		</view>
@@ -69,7 +69,7 @@
 				<view class="card-button">
           <view @click="removeOrder(item)">删除</view>
           <view>查看物流</view>
-          <view>再次购买</view>
+          <view @click="lookDetail(item)">再次购买</view>
 				</view>
 			</view>
 		</view>
@@ -97,8 +97,8 @@
 				</view>
 				<view class="card-button">
           <view @click="removeOrder(item)">删除</view>
-          <view>确认收货</view>
-          <view>再次购买</view>
+          <view @click="confimOrder(item)">确认收货</view>
+          <view @click="lookDetail(item)">再次购买</view>
 				</view>
 			</view>
 		</view>
@@ -115,7 +115,7 @@
       			<view>订单编号：2018041729873019</view>
       			<text>全部订单</text>
       		</view>
-      		<view class="card" v-for="(item,i) in orderlist" :key="i" v-if="item.orderState==3">
+      		<view class="card" v-for="(item,i) in susccOrder" :key="i">
       			<view class="card-img">
       				<image :src="item.goods.gimg1"></image>
       			</view>
@@ -129,8 +129,7 @@
       				</view>
       				<view class="card-button">
                 <view @click="removeOrder(item)">删除</view>
-                <view>查看物流</view>
-                <view>再次购买</view>
+                <view @click="lookDetail(item)">再次购买</view>
       				</view>
       			</view>
       		</view>
@@ -165,12 +164,14 @@
         items:['全部','待付款','待收货','完成'],
         current: 0,
         orderlist:[],
-        uid:0
+        uid:0,
+		susccOrder:[]
 			}
 		},
 		onLoad(options) {
       this.uid=options.uid
       this.getMyOrder(options.uid)
+	  this.getSuccess(this.uid)
     },
 		methods: {
       ...mapMutations('m_order',['onloadOrders','removeO','confirmPay']),
@@ -188,16 +189,29 @@
         let result = await this.$request("/removeOrderById",{oId:item.orderId})
         if(result){
 			this.getMyOrder(this.uid)
+			this.getSuccess(this.uid)
 		}
        },
 	   
        async confimOrder(item){
          let result = await this.$request("/confirmResive",{oId:item.orderId})
+		 this.getSuccess(this.uid)
          this.confirmPay(item)
+		 
        },
+	   async getSuccess(e){
+		   let result = await this.$request("/getSuccess",{uid:e})
+		   this.susccOrder = result
+		   console.log(result)
+	   },
        payOrder(item){
          
-       }
+       },
+	   lookDetail(item){
+		   uni.navigateTo({
+		   	url:'../goodsDetail/goodsDetail?query='+item.goods.gid
+		   })
+	   }
       }
 
 	}

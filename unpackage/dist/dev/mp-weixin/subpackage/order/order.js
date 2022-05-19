@@ -96,7 +96,7 @@ var components
 try {
   components = {
     mySearch: function() {
-      return __webpack_require__.e(/*! import() | components/my-search/my-search */ "components/my-search/my-search").then(__webpack_require__.bind(null, /*! @/components/my-search/my-search.vue */ 302))
+      return __webpack_require__.e(/*! import() | components/my-search/my-search */ "components/my-search/my-search").then(__webpack_require__.bind(null, /*! @/components/my-search/my-search.vue */ 310))
     }
   }
 } catch (e) {
@@ -153,8 +153,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 41));
-
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 41));
 
 
 
@@ -320,12 +319,14 @@ var _vuex = __webpack_require__(/*! vuex */ 14);function _interopRequireDefault(
       items: ['全部', '待付款', '待收货', '完成'],
       current: 0,
       orderlist: [],
-      uid: 0 };
+      uid: 0,
+      susccOrder: [] };
 
   },
   onLoad: function onLoad(options) {
     this.uid = options.uid;
     this.getMyOrder(options.uid);
+    this.getSuccess(this.uid);
   },
   methods: _objectSpread(_objectSpread({},
   (0, _vuex.mapMutations)('m_order', ['onloadOrders', 'removeO', 'confirmPay'])), {}, {
@@ -343,16 +344,30 @@ var _vuex = __webpack_require__(/*! vuex */ 14);function _interopRequireDefault(
                   _this2.$request("/removeOrderById", { oId: item.orderId }));case 2:result = _context2.sent;
                 if (result) {
                   _this2.getMyOrder(_this2.uid);
+                  _this2.getSuccess(_this2.uid);
                 }case 4:case "end":return _context2.stop();}}}, _callee2);}))();
     },
 
     confimOrder: function confimOrder(item) {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var result;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:_context3.next = 2;return (
                   _this3.$request("/confirmResive", { oId: item.orderId }));case 2:result = _context3.sent;
-                _this3.confirmPay(item);case 4:case "end":return _context3.stop();}}}, _callee3);}))();
+                _this3.getSuccess(_this3.uid);
+                _this3.confirmPay(item);case 5:case "end":return _context3.stop();}}}, _callee3);}))();
+
+    },
+    getSuccess: function getSuccess(e) {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var result;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.next = 2;return (
+                  _this4.$request("/getSuccess", { uid: e }));case 2:result = _context4.sent;
+                _this4.susccOrder = result;
+                console.log(result);case 5:case "end":return _context4.stop();}}}, _callee4);}))();
     },
     payOrder: function payOrder(item) {
 
+    },
+    lookDetail: function lookDetail(item) {
+      uni.navigateTo({
+        url: '../goodsDetail/goodsDetail?query=' + item.goods.gid });
+
     } }) };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
